@@ -1,4 +1,20 @@
 type Query {
-    "A simple type for getting started!"
-    hello: String
+    product(id: String): Product
+    products: [Product]
+}
+
+type Product {
+    id: ID!
+    name: String!
+    brand: Brand!
+    url: String
+    image_url: String
+    reviewer_average: Float!
+    review_count: Int!
+}
+
+type Brand {
+    id: ID!
+    url: String
+    name: String!
 }

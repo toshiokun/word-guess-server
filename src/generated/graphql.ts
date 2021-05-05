@@ -3,6 +3,7 @@ export type Maybe<T> = T | null;
 export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
 export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
 export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type RequireFields<T, K extends keyof T> = { [X in Exclude<keyof T, K>]?: T[X] } & { [P in K]-?: NonNullable<T[P]> };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
   ID: string;
@@ -12,10 +13,33 @@ export type Scalars = {
   Float: number;
 };
 
+export type Brand = {
+  __typename?: 'Brand';
+  id: Scalars['ID'];
+  url?: Maybe<Scalars['String']>;
+  name: Scalars['String'];
+};
+
+export type Product = {
+  __typename?: 'Product';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  brand: Brand;
+  url?: Maybe<Scalars['String']>;
+  image_url?: Maybe<Scalars['String']>;
+  reviewer_average: Scalars['Float'];
+  review_count: Scalars['Int'];
+};
+
 export type Query = {
   __typename?: 'Query';
-  /** A simple type for getting started! */
-  hello?: Maybe<Scalars['String']>;
+  product?: Maybe<Product>;
+  products?: Maybe<Array<Maybe<Product>>>;
+};
+
+
+export type QueryProductArgs = {
+  id?: Maybe<Scalars['String']>;
 };
 
 
@@ -96,23 +120,54 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Query: ResolverTypeWrapper<{}>;
+  Brand: ResolverTypeWrapper<Brand>;
+  ID: ResolverTypeWrapper<Scalars['ID']>;
   String: ResolverTypeWrapper<Scalars['String']>;
+  Product: ResolverTypeWrapper<Product>;
+  Float: ResolverTypeWrapper<Scalars['Float']>;
+  Int: ResolverTypeWrapper<Scalars['Int']>;
+  Query: ResolverTypeWrapper<{}>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Query: {};
+  Brand: Brand;
+  ID: Scalars['ID'];
   String: Scalars['String'];
+  Product: Product;
+  Float: Scalars['Float'];
+  Int: Scalars['Int'];
+  Query: {};
   Boolean: Scalars['Boolean'];
 };
 
+export type BrandResolvers<ContextType = any, ParentType extends ResolversParentTypes['Brand'] = ResolversParentTypes['Brand']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type ProductResolvers<ContextType = any, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  brand?: Resolver<ResolversTypes['Brand'], ParentType, ContextType>;
+  url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  image_url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  reviewer_average?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
+  review_count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  hello?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  product?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryProductArgs, never>>;
+  products?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = any> = {
+  Brand?: BrandResolvers<ContextType>;
+  Product?: ProductResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
 };
 
