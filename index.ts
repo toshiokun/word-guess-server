@@ -1,14 +1,18 @@
 const { ApolloServer, gql } = require('apollo-server');
 const { importSchema } = require('graphql-import');
-import { Resolvers, Product } from './src/generated/graphql';
+import { Resolvers, User, Word, Game } from './src/generated/graphql';
 
 const typeDefs = importSchema('schema.gql');
 
 // A map of functions which return data for the schema.
 const resolvers: Resolvers = {
   Query: {
-    product: async (_parent, args, _context, _info) => ({} as Product),
-    products: async (_parent, args, _context, _info) => ([] as Product[]),
+    user: async (_parent, args, _context, _info) => ({} as User),
+    users: async (_parent, args, _context, _info) => ([] as User[]),
+    word: async (_parent, args, _context, _info) => ({} as Word),
+    words: async (_parent, args, _context, _info) => ([] as Word[]),
+    game: async (_parent, args, _context, _info) => ({} as Game),
+    games: async (_parent, args, _context, _info) => ([] as Game[]),
   },
 };
 

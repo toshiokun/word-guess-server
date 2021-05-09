@@ -13,33 +13,62 @@ export type Scalars = {
   Float: number;
 };
 
-export type Brand = {
-  __typename?: 'Brand';
+export type Game = {
+  __typename?: 'Game';
   id: Scalars['ID'];
-  url?: Maybe<Scalars['String']>;
-  name: Scalars['String'];
+  game_users?: Maybe<Array<Maybe<GameUser>>>;
 };
 
-export type Product = {
-  __typename?: 'Product';
-  id: Scalars['ID'];
-  name: Scalars['String'];
-  brand: Brand;
-  url?: Maybe<Scalars['String']>;
-  image_url?: Maybe<Scalars['String']>;
-  reviewer_average: Scalars['Float'];
-  review_count: Scalars['Int'];
+export type GameUser = {
+  __typename?: 'GameUser';
+  user: User;
+  game: Game;
+  select_word: Array<Maybe<SelectWord>>;
 };
 
 export type Query = {
   __typename?: 'Query';
-  product?: Maybe<Product>;
-  products?: Maybe<Array<Maybe<Product>>>;
+  user?: Maybe<User>;
+  users?: Maybe<Array<Maybe<User>>>;
+  word?: Maybe<Word>;
+  words?: Maybe<Array<Maybe<Word>>>;
+  game?: Maybe<Game>;
+  games?: Maybe<Array<Maybe<Game>>>;
 };
 
 
-export type QueryProductArgs = {
+export type QueryUserArgs = {
   id?: Maybe<Scalars['String']>;
+};
+
+
+export type QueryWordArgs = {
+  id?: Maybe<Scalars['String']>;
+};
+
+
+export type QueryGameArgs = {
+  id?: Maybe<Scalars['String']>;
+};
+
+export type SelectWord = {
+  __typename?: 'SelectWord';
+  user: User;
+  word: Word;
+};
+
+export type User = {
+  __typename?: 'User';
+  id: Scalars['ID'];
+  name: Scalars['String'];
+  email: Scalars['String'];
+  games?: Maybe<Array<Maybe<Game>>>;
+};
+
+export type Word = {
+  __typename?: 'Word';
+  id: Scalars['ID'];
+  title?: Maybe<Scalars['String']>;
 };
 
 
@@ -120,55 +149,79 @@ export type DirectiveResolverFn<TResult = {}, TParent = {}, TContext = {}, TArgs
 
 /** Mapping between all available schema types and the resolvers types */
 export type ResolversTypes = {
-  Brand: ResolverTypeWrapper<Brand>;
+  Game: ResolverTypeWrapper<Game>;
   ID: ResolverTypeWrapper<Scalars['ID']>;
-  String: ResolverTypeWrapper<Scalars['String']>;
-  Product: ResolverTypeWrapper<Product>;
-  Float: ResolverTypeWrapper<Scalars['Float']>;
-  Int: ResolverTypeWrapper<Scalars['Int']>;
+  GameUser: ResolverTypeWrapper<GameUser>;
   Query: ResolverTypeWrapper<{}>;
+  String: ResolverTypeWrapper<Scalars['String']>;
+  SelectWord: ResolverTypeWrapper<SelectWord>;
+  User: ResolverTypeWrapper<User>;
+  Word: ResolverTypeWrapper<Word>;
   Boolean: ResolverTypeWrapper<Scalars['Boolean']>;
 };
 
 /** Mapping between all available schema types and the resolvers parents */
 export type ResolversParentTypes = {
-  Brand: Brand;
+  Game: Game;
   ID: Scalars['ID'];
-  String: Scalars['String'];
-  Product: Product;
-  Float: Scalars['Float'];
-  Int: Scalars['Int'];
+  GameUser: GameUser;
   Query: {};
+  String: Scalars['String'];
+  SelectWord: SelectWord;
+  User: User;
+  Word: Word;
   Boolean: Scalars['Boolean'];
 };
 
-export type BrandResolvers<ContextType = any, ParentType extends ResolversParentTypes['Brand'] = ResolversParentTypes['Brand']> = {
+export type GameResolvers<ContextType = any, ParentType extends ResolversParentTypes['Game'] = ResolversParentTypes['Game']> = {
   id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  game_users?: Resolver<Maybe<Array<Maybe<ResolversTypes['GameUser']>>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
-export type ProductResolvers<ContextType = any, ParentType extends ResolversParentTypes['Product'] = ResolversParentTypes['Product']> = {
-  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
-  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
-  brand?: Resolver<ResolversTypes['Brand'], ParentType, ContextType>;
-  url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  image_url?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
-  reviewer_average?: Resolver<ResolversTypes['Float'], ParentType, ContextType>;
-  review_count?: Resolver<ResolversTypes['Int'], ParentType, ContextType>;
+export type GameUserResolvers<ContextType = any, ParentType extends ResolversParentTypes['GameUser'] = ResolversParentTypes['GameUser']> = {
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  game?: Resolver<ResolversTypes['Game'], ParentType, ContextType>;
+  select_word?: Resolver<Array<Maybe<ResolversTypes['SelectWord']>>, ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type QueryResolvers<ContextType = any, ParentType extends ResolversParentTypes['Query'] = ResolversParentTypes['Query']> = {
-  product?: Resolver<Maybe<ResolversTypes['Product']>, ParentType, ContextType, RequireFields<QueryProductArgs, never>>;
-  products?: Resolver<Maybe<Array<Maybe<ResolversTypes['Product']>>>, ParentType, ContextType>;
+  user?: Resolver<Maybe<ResolversTypes['User']>, ParentType, ContextType, RequireFields<QueryUserArgs, never>>;
+  users?: Resolver<Maybe<Array<Maybe<ResolversTypes['User']>>>, ParentType, ContextType>;
+  word?: Resolver<Maybe<ResolversTypes['Word']>, ParentType, ContextType, RequireFields<QueryWordArgs, never>>;
+  words?: Resolver<Maybe<Array<Maybe<ResolversTypes['Word']>>>, ParentType, ContextType>;
+  game?: Resolver<Maybe<ResolversTypes['Game']>, ParentType, ContextType, RequireFields<QueryGameArgs, never>>;
+  games?: Resolver<Maybe<Array<Maybe<ResolversTypes['Game']>>>, ParentType, ContextType>;
+};
+
+export type SelectWordResolvers<ContextType = any, ParentType extends ResolversParentTypes['SelectWord'] = ResolversParentTypes['SelectWord']> = {
+  user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
+  word?: Resolver<ResolversTypes['Word'], ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type UserResolvers<ContextType = any, ParentType extends ResolversParentTypes['User'] = ResolversParentTypes['User']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  name?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  email?: Resolver<ResolversTypes['String'], ParentType, ContextType>;
+  games?: Resolver<Maybe<Array<Maybe<ResolversTypes['Game']>>>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
+};
+
+export type WordResolvers<ContextType = any, ParentType extends ResolversParentTypes['Word'] = ResolversParentTypes['Word']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
+  title?: Resolver<Maybe<ResolversTypes['String']>, ParentType, ContextType>;
+  __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
 };
 
 export type Resolvers<ContextType = any> = {
-  Brand?: BrandResolvers<ContextType>;
-  Product?: ProductResolvers<ContextType>;
+  Game?: GameResolvers<ContextType>;
+  GameUser?: GameUserResolvers<ContextType>;
   Query?: QueryResolvers<ContextType>;
+  SelectWord?: SelectWordResolvers<ContextType>;
+  User?: UserResolvers<ContextType>;
+  Word?: WordResolvers<ContextType>;
 };
 
 
