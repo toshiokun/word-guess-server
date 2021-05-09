@@ -1,6 +1,6 @@
 const { ApolloServer, gql } = require('apollo-server');
 const { importSchema } = require('graphql-import');
-import { Resolvers, User, Word, Game } from './src/generated/graphql';
+import { Resolvers, User, Word, Game, GameUser } from './src/generated/graphql';
 
 const typeDefs = importSchema('schema.gql');
 
@@ -13,6 +13,8 @@ const resolvers: Resolvers = {
     words: async (_parent, args, _context, _info) => ([] as Word[]),
     game: async (_parent, args, _context, _info) => ({} as Game),
     games: async (_parent, args, _context, _info) => ([] as Game[]),
+    game_user: async (_parent, args, _context, _info) => ({} as GameUser),
+    game_users: async (_parent, args, _context, _info) => ([] as GameUser[]),
   },
 };
 

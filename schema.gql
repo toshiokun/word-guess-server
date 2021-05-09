@@ -5,6 +5,8 @@ type Query {
   words: [Word]
   game(id: String): Game
   games: [Game]
+  game_user(id: String): GameUser
+  game_users: [GameUser]
 }
 
 type Word {
@@ -20,6 +22,7 @@ type User {
 }
 
 type GameUser {
+  id: ID!
   user: User!
   game: Game!
   select_word: [SelectWord]!
@@ -31,6 +34,7 @@ type Game {
 }
 
 type SelectWord {
+  id: ID!
   user: User!
   word: Word!
 }

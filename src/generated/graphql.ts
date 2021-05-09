@@ -21,6 +21,7 @@ export type Game = {
 
 export type GameUser = {
   __typename?: 'GameUser';
+  id: Scalars['ID'];
   user: User;
   game: Game;
   select_word: Array<Maybe<SelectWord>>;
@@ -34,6 +35,8 @@ export type Query = {
   words?: Maybe<Array<Maybe<Word>>>;
   game?: Maybe<Game>;
   games?: Maybe<Array<Maybe<Game>>>;
+  game_user?: Maybe<GameUser>;
+  game_users?: Maybe<Array<Maybe<GameUser>>>;
 };
 
 
@@ -51,8 +54,14 @@ export type QueryGameArgs = {
   id?: Maybe<Scalars['String']>;
 };
 
+
+export type QueryGame_UserArgs = {
+  id?: Maybe<Scalars['String']>;
+};
+
 export type SelectWord = {
   __typename?: 'SelectWord';
+  id: Scalars['ID'];
   user: User;
   word: Word;
 };
@@ -180,6 +189,7 @@ export type GameResolvers<ContextType = any, ParentType extends ResolversParentT
 };
 
 export type GameUserResolvers<ContextType = any, ParentType extends ResolversParentTypes['GameUser'] = ResolversParentTypes['GameUser']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   game?: Resolver<ResolversTypes['Game'], ParentType, ContextType>;
   select_word?: Resolver<Array<Maybe<ResolversTypes['SelectWord']>>, ParentType, ContextType>;
@@ -193,9 +203,12 @@ export type QueryResolvers<ContextType = any, ParentType extends ResolversParent
   words?: Resolver<Maybe<Array<Maybe<ResolversTypes['Word']>>>, ParentType, ContextType>;
   game?: Resolver<Maybe<ResolversTypes['Game']>, ParentType, ContextType, RequireFields<QueryGameArgs, never>>;
   games?: Resolver<Maybe<Array<Maybe<ResolversTypes['Game']>>>, ParentType, ContextType>;
+  game_user?: Resolver<Maybe<ResolversTypes['GameUser']>, ParentType, ContextType, RequireFields<QueryGame_UserArgs, never>>;
+  game_users?: Resolver<Maybe<Array<Maybe<ResolversTypes['GameUser']>>>, ParentType, ContextType>;
 };
 
 export type SelectWordResolvers<ContextType = any, ParentType extends ResolversParentTypes['SelectWord'] = ResolversParentTypes['SelectWord']> = {
+  id?: Resolver<ResolversTypes['ID'], ParentType, ContextType>;
   user?: Resolver<ResolversTypes['User'], ParentType, ContextType>;
   word?: Resolver<ResolversTypes['Word'], ParentType, ContextType>;
   __isTypeOf?: IsTypeOfResolverFn<ParentType, ContextType>;
